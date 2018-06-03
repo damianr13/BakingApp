@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -65,6 +68,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         @BindView(R.id.tv_recipe_name)
         TextView mShortDescriptionTextView;
+        @BindView(R.id.tv_number_of_servings)
+        TextView mNumberOfServingsTextView;
+        @BindView(R.id.iv_recipe_image)
+        ImageView mImageView;
 
         RecipeViewHolder(View itemView) {
             super(itemView);
@@ -78,6 +85,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         void bind(Recipe recipe) {
             mShortDescriptionTextView.setText(recipe.getName());
+            mNumberOfServingsTextView.setText(String.valueOf(recipe.getServings()));
+            if (recipe.getImage() == null || recipe.getImage().isEmpty()) {
+                mImageView.setImageResource(R.mipmap.recipe_default);
+            }
+            else {
+                Picasso.get().load(recipe.getImage()).error(R.mipmap.recipe_default).into(mImageView);
+            }
+
         }
     }
 }
