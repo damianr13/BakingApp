@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_measure"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        style="@style/BasicTextStyle"
+        tools:text="g" />
+
+    <TextView
+        android:id="@+id/tv_quantity"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/tv_measure"
+        android:layout_toStartOf="@+id/tv_measure"
+        style="@style/BasicTextStyle"
+        tools:text="1.2" />
+
+    <TextView
+        android:id="@+id/tv_ingredient_name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/tv_quantity"
+        android:layout_toStartOf="@id/tv_quantity"
+        style="@style/BasicTextStyle"
+        tools:text="Cheese but not the usual kind, more like the one that has tiny holes inside, you know?" />
+</RelativeLayout>

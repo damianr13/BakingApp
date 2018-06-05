@@ -3,10 +3,12 @@ package nanodegree.damian.bakingapp.data;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by robert_damian on 03.06.2018.
  */
-
+@Parcel
 public class Ingredient {
 
     private double quantity;

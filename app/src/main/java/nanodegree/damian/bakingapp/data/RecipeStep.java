@@ -2,10 +2,12 @@ package nanodegree.damian.bakingapp.data;
 
 import com.google.gson.Gson;
 
+import org.parceler.Parcel;
+
 /**
  * Created by robert_damian on 03.06.2018.
  */
-
+@Parcel
 public class RecipeStep {
     private int id;
     private String shortDescription;

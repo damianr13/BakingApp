@@ -1,6 +1,7 @@
 package nanodegree.damian.bakingapp.visuals;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,14 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import org.parceler.Parcels;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import nanodegree.damian.bakingapp.R;
+import nanodegree.damian.bakingapp.RecipeActivity;
 import nanodegree.damian.bakingapp.data.Recipe;
+import nanodegree.damian.bakingapp.helpers.BakingUtils;
 
 /**
  * Created by robert_damian on 03.06.2018.
@@ -43,8 +46,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View movieView = inflater.inflate(R.layout.recipe_item, parent, false);
-        RecipeViewHolder recipeViewHolder = new RecipeViewHolder(movieView);
+        View recipeView = inflater.inflate(R.layout.recipe_item, parent, false);
+        RecipeViewHolder recipeViewHolder = new RecipeViewHolder(context, recipeView);
 
         recipeViewHolder.bind(mRecipeList.get(mRecipeHoldersCount));
         mRecipeHoldersCount++;
@@ -73,26 +76,30 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         @BindView(R.id.iv_recipe_image)
         ImageView mImageView;
 
-        RecipeViewHolder(View itemView) {
+        private Context mContext;
+        private Recipe mRecipe;
+
+        RecipeViewHolder(Context context, View itemView) {
             super(itemView);
+            this.mContext = context;
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-
+            Intent recipeDetailsActivity = new Intent(mContext, RecipeActivity.class);
+            recipeDetailsActivity.putExtra(RecipeActivity.EXTRA_RECIPE, Parcels.wrap(mRecipe));
+            mContext.startActivity(recipeDetailsActivity);
         }
 
         void bind(Recipe recipe) {
+            this.mRecipe = recipe;
+
             mShortDescriptionTextView.setText(recipe.getName());
             mNumberOfServingsTextView.setText(String.valueOf(recipe.getServings()));
-            if (recipe.getImage() == null || recipe.getImage().isEmpty()) {
-                mImageView.setImageResource(R.mipmap.recipe_default);
-            }
-            else {
-                Picasso.get().load(recipe.getImage()).error(R.mipmap.recipe_default).into(mImageView);
-            }
-
+            BakingUtils.loadRecipeImageIntoView(mRecipe.getImage(), mImageView);
         }
     }
 }

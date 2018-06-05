@@ -1,12 +1,8 @@
 package nanodegree.damian.bakingapp.data;
 
-import com.google.gson.Gson;
-
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -131,16 +127,6 @@ public class RecipeTest {
                 recipe.getIngredientList().get(0).getName());
         Assert.assertEquals("Recipe Introduction",
                 recipe.getStepList().get(0).getShortDescription());
-    }
-
-    @Test
-    public void testToJSON() {
-        Recipe recipe = new Recipe();
-        recipe.ingredientList = new ArrayList<>();
-        recipe.ingredientList.add(new Ingredient());
-
-        Assert.assertThat(new Gson().toJson(recipe),
-                CoreMatchers.containsString("ingredients"));
     }
 
     @Test
