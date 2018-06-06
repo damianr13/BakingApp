@@ -8,7 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
+import java.util.ArrayList;
+
 import nanodegree.damian.bakingapp.MainActivity;
+import nanodegree.damian.bakingapp.R;
+import nanodegree.damian.bakingapp.data.Ingredient;
+import nanodegree.damian.bakingapp.visuals.IngredientArrayAdapter;
 
 /**
  * Created by robert_damian on 06.06.2018.
@@ -21,7 +26,7 @@ public class IngredientsWidgetProvider extends AppWidgetProvider {
         Intent launchAppIntent = new Intent(context, MainActivity.class);
         PendingIntent launchAppPendingIntent = PendingIntent.getActivity(context, 0,
                 launchAppIntent, 0);
-        RemoteViews remoteViews;
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
 
     }
 
