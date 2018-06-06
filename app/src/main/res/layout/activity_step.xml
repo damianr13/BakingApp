@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_step_holder"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="nanodegree.damian.bakingapp.StepActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_cover_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:id="@+id/pl_step_media"
+            style="@style/CoverMedia"/>
+    
+        <ImageView
+            android:id="@+id/iv_thumbnail_media"
+            style="@style/CoverMedia"
+            android:contentDescription="@string/thumbnail_recipe_step"/>
+    </RelativeLayout>
+    
+    <ScrollView
+        android:layout_below="@+id/rl_cover_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_text_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/BasicTextStyle"
+            tools:text="This is where the long description will be"/>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        style="@style/TextAppearance.AppCompat.Display3"
+        tools:text="5"/>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_steps_prev"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:text="@string/previous"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_steps_next"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/next"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -9,10 +9,9 @@
 
     <ImageView
         android:id="@+id/iv_recipe_image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
         tools:src="@mipmap/recipe_default"
-        android:contentDescription="@string/recipe_image_content_description" />
+        android:contentDescription="@string/recipe_image_content_description"
+        style="@style/CoverMedia"/>
 
     <ListView
         android:id="@+id/lv_ingredients"

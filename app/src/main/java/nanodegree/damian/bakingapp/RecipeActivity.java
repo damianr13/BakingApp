@@ -1,7 +1,9 @@
 package nanodegree.damian.bakingapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +14,7 @@ import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import nanodegree.damian.bakingapp.data.Ingredient;
 import nanodegree.damian.bakingapp.data.Recipe;
 import nanodegree.damian.bakingapp.helpers.BakingUtils;
@@ -43,4 +46,12 @@ public class RecipeActivity extends AppCompatActivity {
         mIngredientListView.setAdapter(mIngredientsAdapter);
     }
 
+    @OnClick(R.id.btn_see_steps)
+    public void seeSteps(View v) {
+        Intent stepsIntent = new Intent(this, StepActivity.class);
+        stepsIntent.putExtra(StepActivity.EXTRA_RECIPE, Parcels.wrap(mRecipe));
+        stepsIntent.putExtra(StepActivity.EXTRA_STEP_INDEX, 0);
+
+        startActivity(stepsIntent);
+    }
 }

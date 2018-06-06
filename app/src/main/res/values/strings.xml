@@ -3,4 +3,7 @@
     <string name="label_number_of_servings">Number of Servings:</string>
     <string name="recipe_image_content_description">Image of the recipe</string>
     <string name="see_steps">See steps</string>
+    <string name="thumbnail_recipe_step">Thumbnail recipe step</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 </resources>
