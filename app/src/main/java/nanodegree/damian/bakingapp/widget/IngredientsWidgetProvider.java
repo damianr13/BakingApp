@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
-import nanodegree.damian.bakingapp.IngredientsWidgetConfigure;
 import nanodegree.damian.bakingapp.MainActivity;
 import nanodegree.damian.bakingapp.R;
 
@@ -18,8 +17,8 @@ import nanodegree.damian.bakingapp.R;
 
 public class IngredientsWidgetProvider extends AppWidgetProvider {
 
-    public static void updatePlantWidget(Context context, AppWidgetManager appWidgetManager,
-                                         int appWidgetId) {
+    public static void updateIngredientsWidget(Context context, AppWidgetManager appWidgetManager,
+                                               int appWidgetId) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
         Intent intent = new Intent(context, IngredientsWidgetService.class);
 
@@ -37,12 +36,12 @@ public class IngredientsWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
-            updatePlantWidget(context, appWidgetManager, appWidgetId);
+            updateIngredientsWidget(context, appWidgetManager, appWidgetId);
         }
     }
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        updatePlantWidget(context, appWidgetManager, appWidgetId);
+        updateIngredientsWidget(context, appWidgetManager, appWidgetId);
     }
 }

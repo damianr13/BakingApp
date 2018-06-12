@@ -16,7 +16,6 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,7 +88,7 @@ public class IngredientsWidgetConfigure extends AppCompatActivity
 
         AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
         widgetManager.notifyAppWidgetViewDataChanged(mAppWidgetId, R.id.lv_ingredients);
-        IngredientsWidgetProvider.updatePlantWidget(this, widgetManager,
+        IngredientsWidgetProvider.updateIngredientsWidget(this, widgetManager,
                 mAppWidgetId);
 
         Intent resultValue = new Intent();
