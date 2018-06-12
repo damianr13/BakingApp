@@ -6,4 +6,5 @@
     <string name="thumbnail_recipe_step">Thumbnail recipe step</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
+    <string name="pick_recipe">Pick a recipe</string>
 </resources>
