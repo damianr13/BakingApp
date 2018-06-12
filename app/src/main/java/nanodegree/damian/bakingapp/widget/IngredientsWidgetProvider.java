@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
+import nanodegree.damian.bakingapp.IngredientsWidgetConfigure;
 import nanodegree.damian.bakingapp.MainActivity;
 import nanodegree.damian.bakingapp.R;
 
@@ -21,6 +22,8 @@ public class IngredientsWidgetProvider extends AppWidgetProvider {
                                          int appWidgetId) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
         Intent intent = new Intent(context, IngredientsWidgetService.class);
+
+        intent.putExtra(IngredientsWidgetService.WIDGET_ID, appWidgetId);
         remoteViews.setRemoteAdapter(R.id.lv_ingredients, intent);
 
         Intent launchAppIntent = new Intent(context, MainActivity.class);

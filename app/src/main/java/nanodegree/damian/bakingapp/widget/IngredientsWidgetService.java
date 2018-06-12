@@ -7,9 +7,9 @@ import android.widget.RemoteViewsService;
 
 import java.util.List;
 
+import nanodegree.damian.bakingapp.IngredientsWidgetConfigure;
 import nanodegree.damian.bakingapp.R;
 import nanodegree.damian.bakingapp.data.Ingredient;
-import nanodegree.damian.bakingapp.data.Recipe;
 import nanodegree.damian.bakingapp.data.database.AppDatabase;
 
 /**
@@ -18,9 +18,13 @@ import nanodegree.damian.bakingapp.data.database.AppDatabase;
 
 public class IngredientsWidgetService extends RemoteViewsService {
 
+    public static final String WIDGET_ID = "WIDGET_ID";
+
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new IngredientsRemoteViewsFactory(this.getApplicationContext());
+        int preferredRecipeId = intent.getIntExtra(WIDGET_ID,
+                IngredientsWidgetConfigure.DEFAULT_RECIPE_ID);
+        return new IngredientsRemoteViewsFactory(this.getApplicationContext(), preferredRecipeId);
     }
 }
 
@@ -28,8 +32,10 @@ class IngredientsRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     private Context mContext;
     private List<Ingredient> mIngredientList;
+    private int mAppWidgetId;
 
-    IngredientsRemoteViewsFactory(Context context) {
+    IngredientsRemoteViewsFactory(Context context, int widgetId) {
+        this.mAppWidgetId = widgetId;
         this.mContext = context;
     }
 
@@ -43,8 +49,9 @@ class IngredientsRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
     }
 
     private void loadIngredientsFromDatabase() {
+        int preferredRecipe = IngredientsWidgetConfigure.loadPreferredRecipe(mContext, mAppWidgetId);
         mIngredientList = AppDatabase.getInstance(mContext).ingredientDao()
-                .getIngredientsByRecipe(1);
+                .getIngredientsByRecipe(preferredRecipe);
     }
 
     @Override
