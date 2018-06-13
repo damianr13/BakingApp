@@ -47,7 +47,7 @@ public class StepActivity extends AppCompatActivity implements ExoPlayer.EventLi
 
     @BindView(R.id.pl_step_media)
     SimpleExoPlayerView mPlayerView;
-    @BindView(R.id.tv_text_description)
+    @BindView(R.id.tv_step_description)
     TextView mDescriptionTextView;
     @BindView(R.id.iv_thumbnail_media)
     ImageView mThumbnailImageView;

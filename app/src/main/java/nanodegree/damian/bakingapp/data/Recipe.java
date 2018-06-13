@@ -49,7 +49,7 @@ public class Recipe{
         return new Gson().toJson(this);
     }
 
-    static Recipe fromJSON(String json) {
+    public static Recipe fromJSON(String json) {
         return new Gson().fromJson(json, Recipe.class);
     }
 
