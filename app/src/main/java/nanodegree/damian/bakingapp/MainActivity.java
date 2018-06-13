@@ -1,85 +1,75 @@
 package nanodegree.damian.bakingapp;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import nanodegree.damian.bakingapp.data.Recipe;
-import nanodegree.damian.bakingapp.helpers.LoaderHelper;
-import nanodegree.damian.bakingapp.helpers.NetworkHelper;
-import nanodegree.damian.bakingapp.helpers.RecipesLoader;
-import nanodegree.damian.bakingapp.visuals.RecipeAdapter;
+import nanodegree.damian.bakingapp.fragments.RecipeDetailsFragment;
+import nanodegree.damian.bakingapp.fragments.RecipeListFragment;
+import nanodegree.damian.bakingapp.helpers.BakingUtils;
 
-public class MainActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<List<Recipe>>,
-        LoaderHelper.ResultsDisplayer<List<Recipe>>{
+public class MainActivity extends AppCompatActivity implements
+        RecipeListFragment.RecipeListFragmentOwnerCallbacks,
+        RecipeDetailsFragment.OnRecipeStepsClickListener {
 
-    private static final int RECIPES_LOADER = 13;
-
-    @BindView(R.id.rv_recipes_view)
-    RecyclerView mRecyclerView;
-
-    private RecipeAdapter mAdapter;
-    private LoaderHelper<List<Recipe>> mLoaderHelper;
+    private boolean mTwoPane;
+    private Recipe mRecipe;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
-        mAdapter = new RecipeAdapter(null);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        mLoaderHelper = new LoaderHelper.LoaderHelperBuilder()
-                .setHelperId(RECIPES_LOADER)
-                .setDisplayedResultsView(mRecyclerView)
-                .setErrorView(findViewById(R.id.tv_error_view))
-                .setLoadingView(findViewById(R.id.pb_progress_view))
-                .setResultDisplayer(this)
-                .build(this);
-
-        if (NetworkHelper.isConnected(this)) {
-            mLoaderHelper.loadStarted();
-            getSupportLoaderManager().initLoader(RECIPES_LOADER, null, this);
-        }
-        else {
-            mLoaderHelper.loadFailed();
+        if (findViewById(R.id.lv_ingredients) != null) {
+            mTwoPane = true;
         }
     }
 
-    @NonNull
     @Override
-    public Loader<List<Recipe>> onCreateLoader(int i, Bundle bundle) {
-        switch (i) {
-            case RECIPES_LOADER:
-                return new RecipesLoader(this);
+    public void recipeSelected(Recipe recipe) {
+        if (mTwoPane) {
+            mRecipe = recipe;
+            swapRecipeDetailsFragment();
+        } else {
+            launchRecipeDetailsActivity(recipe);
+        }
+    }
+
+    @Override
+    public void loadingFinished(List<Recipe> recipeList) {
+        if (recipeList == null || recipeList.size() == 0) {
+            return ;
         }
 
-        throw new UnsupportedOperationException("Unimplemented loader: " + i);
+        // display first recipe by default
+        mRecipe = recipeList.get(0);
+        swapRecipeDetailsFragment();
+    }
+
+    public void launchRecipeDetailsActivity(Recipe recipe) {
+        Intent recipeActivityIntent = new Intent(this, RecipeActivity.class);
+        recipeActivityIntent.putExtra(RecipeActivity.EXTRA_RECIPE, Parcels.wrap(recipe));
+        startActivity(recipeActivityIntent);
+    }
+
+    public void swapRecipeDetailsFragment() {
+        RecipeDetailsFragment recipeDetailsFragment = new RecipeDetailsFragment();
+        recipeDetailsFragment.setRecipe(mRecipe);
+        recipeDetailsFragment.setRecipeStepsClickListener(this);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.slave_list_fragment, recipeDetailsFragment)
+                .commit();
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<List<Recipe>> loader, List<Recipe> recipes) {
-        mLoaderHelper.loadSucceeded(recipes);
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader loader) {
-        mAdapter.swapRecipeList(null);
-    }
-
-    @Override
-    public void displayResults(int helperId, List<Recipe> result) {
-        mAdapter.swapRecipeList(result);
+    public void seeRecipeSteps() {
+        BakingUtils.launchFirstStepActivity(this, mRecipe);
     }
 }

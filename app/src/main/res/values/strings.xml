@@ -7,4 +7,7 @@
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="pick_recipe">Pick a recipe</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,7 +1,6 @@
 package nanodegree.damian.bakingapp.visuals;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,15 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.parceler.Parcels;
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import nanodegree.damian.bakingapp.R;
-import nanodegree.damian.bakingapp.RecipeActivity;
 import nanodegree.damian.bakingapp.data.Recipe;
+import nanodegree.damian.bakingapp.fragments.RecipeListFragment;
 import nanodegree.damian.bakingapp.helpers.BakingUtils;
 
 /**
@@ -29,9 +26,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     private List<Recipe> mRecipeList;
     private int mRecipeHoldersCount;
+    private RecipeListFragment.RecipeListFragmentOwnerCallbacks mRecipeSelectedListener;
 
-    public RecipeAdapter(List<Recipe> recipeList) {
+    public RecipeAdapter(List<Recipe> recipeList,
+                         RecipeListFragment.RecipeListFragmentOwnerCallbacks recipeSelectedListener) {
         this.mRecipeList = recipeList;
+        this.mRecipeSelectedListener = recipeSelectedListener;
         mRecipeHoldersCount = 0;
     }
 
@@ -89,9 +89,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         @Override
         public void onClick(View view) {
-            Intent recipeDetailsActivity = new Intent(mContext, RecipeActivity.class);
-            recipeDetailsActivity.putExtra(RecipeActivity.EXTRA_RECIPE, Parcels.wrap(mRecipe));
-            mContext.startActivity(recipeDetailsActivity);
+            mRecipeSelectedListener.recipeSelected(mRecipe);
         }
 
         void bind(Recipe recipe) {

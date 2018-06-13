@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<fragment
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/master_list_fragment"
+    android:name="nanodegree.damian.bakingapp.fragments.RecipeListFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="nanodegree.damian.bakingapp.MainActivity">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_recipes_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/tv_error_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <ProgressBar
-        android:id="@+id/pb_progress_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-</android.support.constraint.ConstraintLayout>
+    android:layout_height="match_parent" />

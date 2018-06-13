@@ -17,41 +17,27 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import nanodegree.damian.bakingapp.data.Ingredient;
 import nanodegree.damian.bakingapp.data.Recipe;
+import nanodegree.damian.bakingapp.fragments.RecipeDetailsFragment;
 import nanodegree.damian.bakingapp.helpers.BakingUtils;
 import nanodegree.damian.bakingapp.visuals.IngredientArrayAdapter;
 
-public class RecipeActivity extends AppCompatActivity {
+public class RecipeActivity extends AppCompatActivity implements
+        RecipeDetailsFragment.OnRecipeStepsClickListener{
 
     public static final String EXTRA_RECIPE = "RECIPE";
 
-    @BindView(R.id.lv_ingredients)
-    ListView mIngredientListView;
-    @BindView(R.id.iv_recipe_image)
-    ImageView mRecipeImageView;
-
     private Recipe mRecipe;
-    private ArrayAdapter<Ingredient> mIngredientsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
-        ButterKnife.bind(this);
 
         mRecipe = Parcels.unwrap(getIntent().getParcelableExtra(EXTRA_RECIPE));
-
-        BakingUtils.loadRecipeImageIntoView(mRecipe.getImage(), mRecipeImageView);
-
-        mIngredientsAdapter = new IngredientArrayAdapter(this, mRecipe.getIngredientList());
-        mIngredientListView.setAdapter(mIngredientsAdapter);
     }
 
-    @OnClick(R.id.btn_see_steps)
-    public void seeSteps(View v) {
-        Intent stepsIntent = new Intent(this, StepActivity.class);
-        stepsIntent.putExtra(StepActivity.EXTRA_RECIPE, Parcels.wrap(mRecipe));
-        stepsIntent.putExtra(StepActivity.EXTRA_STEP_INDEX, 0);
-
-        startActivity(stepsIntent);
+    @Override
+    public void seeRecipeSteps() {
+        BakingUtils.launchFirstStepActivity(this, mRecipe);
     }
 }

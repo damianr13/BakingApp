@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<fragment
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/master_list_fragment"
+    android:name="nanodegree.damian.bakingapp.fragments.RecipeDetailsFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="nanodegree.damian.bakingapp.RecipeActivity"
-    android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/iv_recipe_image"
-        tools:src="@mipmap/recipe_default"
-        android:contentDescription="@string/recipe_image_content_description"
-        style="@style/CoverMedia"/>
-
-    <ListView
-        android:id="@+id/lv_ingredients"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"/>
-
-    <Button
-        android:id="@+id/btn_see_steps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/see_steps"/>
-
-</LinearLayout>
+    android:layout_height="match_parent" />
