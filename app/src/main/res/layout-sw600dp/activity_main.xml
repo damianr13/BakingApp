@@ -12,10 +12,9 @@
         android:layout_height="match_parent"
         android:layout_weight="0.3"/>
 
-    <fragment
+    <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/slave_list_fragment"
-        android:name="nanodegree.damian.bakingapp.fragments.RecipeDetailsFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"/>

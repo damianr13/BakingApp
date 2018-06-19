@@ -5,27 +5,31 @@
     android:layout_height="match_parent"
     tools:context=".RecipeActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_recipe_image"
-            tools:src="@mipmap/recipe_default"
-            android:contentDescription="@string/recipe_image_content_description"
-            style="@style/CoverMedia"/>
+                <ImageView
+                    android:id="@+id/iv_recipe_image"
+                    tools:src="@mipmap/recipe_default"
+                    android:contentDescription="@string/recipe_image_content_description"
+                    style="@style/CoverMedia"/>
 
-        <ListView
-            android:id="@+id/lv_ingredients"
-            android:layout_width="wrap_content"
-            android:layout_height="250dp"/>
+                <ListView
+                    android:id="@+id/lv_ingredients"
+                    android:layout_width="wrap_content"
+                    android:layout_height="250dp"/>
 
-        <Button
-            android:id="@+id/btn_see_steps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/see_steps"/>
+                <Button
+                    android:id="@+id/btn_see_steps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/see_steps"/>
 
-    </LinearLayout>
+            </LinearLayout>
+    </ScrollView>
 </FrameLayout>

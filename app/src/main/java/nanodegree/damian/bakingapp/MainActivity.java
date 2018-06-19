@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements
         RecipeListFragment.RecipeListFragmentOwnerCallbacks,
         RecipeDetailsFragment.OnRecipeStepsClickListener {
 
+    public static final String EXTRA_RECIPE = RecipeActivity.EXTRA_RECIPE;
+
     private boolean mTwoPane;
     private Recipe mRecipe;
 
@@ -42,15 +44,33 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mRecipe == null) {
+            return ;
+        }
+
+        outState.putParcelable(EXTRA_RECIPE, Parcels.wrap(mRecipe));
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (findViewById(R.id.lv_ingredients) != null) {
+        if (findViewById(R.id.slave_list_fragment) != null) {
             mTwoPane = true;
         }
 
         setFlagOnIdlingResource(false);
+
+        if (savedInstanceState == null) {
+            return ;
+        }
+
+        mRecipe = Parcels.unwrap(savedInstanceState.getParcelable(EXTRA_RECIPE));
+        swapRecipeDetailsFragment();
     }
 
     private void setFlagOnIdlingResource(boolean flag) {
@@ -74,6 +94,11 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void loadingFinished(List<Recipe> recipeList) {
         setFlagOnIdlingResource(true);
+
+        if (mRecipe != null) {
+            // if you already have a recipe we don't care
+            return ;
+        }
 
         if (!mTwoPane) {
             return ;
