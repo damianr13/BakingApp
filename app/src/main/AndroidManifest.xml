@@ -29,6 +29,7 @@
         <activity
             android:name=".StepActivity"
             android:launchMode="singleTask" />
+        <activity android:name=".StepListActivity" />
 
         <service
             android:name=".widget.IngredientsWidgetService"

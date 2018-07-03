@@ -10,6 +10,7 @@ import org.parceler.Parcels;
 
 import nanodegree.damian.bakingapp.R;
 import nanodegree.damian.bakingapp.StepActivity;
+import nanodegree.damian.bakingapp.StepListActivity;
 import nanodegree.damian.bakingapp.data.Recipe;
 
 /**
@@ -28,10 +29,22 @@ public class BakingUtils {
     }
 
     public static void launchFirstStepActivity(Context context, Recipe recipe) {
-        Intent stepsIntent = new Intent(context, StepActivity.class);
-        stepsIntent.putExtra(StepActivity.EXTRA_RECIPE, Parcels.wrap(recipe));
-        stepsIntent.putExtra(StepActivity.EXTRA_STEP_INDEX, 0);
+        launchStepActivity(context, recipe, 0);
+    }
 
-        context.startActivity(stepsIntent);
+    public static void launchStepListActivity(Context context, Recipe recipe) {
+        Intent stepListIntent = new Intent(context, StepListActivity.class);
+        stepListIntent.putExtra(StepListActivity.EXTRA_RECIPE, Parcels.wrap(recipe));
+
+        context.startActivity(stepListIntent);
+    }
+
+    public static void launchStepActivity(Context context, Recipe recipe, int stepIndex) {
+        Intent stepIntent = new Intent(context, StepActivity.class);
+        stepIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        stepIntent.putExtra(StepActivity.EXTRA_RECIPE, Parcels.wrap(recipe));
+        stepIntent.putExtra(StepActivity.EXTRA_STEP_INDEX, stepIndex);
+
+        context.startActivity(stepIntent);
     }
 }

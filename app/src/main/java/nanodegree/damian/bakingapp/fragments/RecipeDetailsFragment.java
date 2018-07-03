@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import nanodegree.damian.bakingapp.R;
+import nanodegree.damian.bakingapp.RecipeActivity;
 import nanodegree.damian.bakingapp.data.Ingredient;
 import nanodegree.damian.bakingapp.data.Recipe;
 import nanodegree.damian.bakingapp.helpers.BakingUtils;
@@ -30,14 +31,14 @@ import nanodegree.damian.bakingapp.visuals.IngredientArrayAdapter;
 public class RecipeDetailsFragment extends Fragment {
 
     public static final String TAG = RecipeDetailsFragment.class.getName();
-    public static final String EXTRA_RECIPE = "RECIPE";
+    public static final String EXTRA_RECIPE = RecipeActivity.EXTRA_RECIPE;
 
     @BindView(R.id.lv_ingredients)
     ListView mIngredientListView;
     @BindView(R.id.iv_recipe_image)
     ImageView mRecipeImageView;
 
-    private OnRecipeStepsClickListener mRecipeStepsClickListener;
+    private OnRecipeControlsClickListener mRecipeControlsClickListener;
     private Recipe mRecipe;
 
     @Nullable
@@ -73,26 +74,32 @@ public class RecipeDetailsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mRecipeStepsClickListener = (OnRecipeStepsClickListener) context;
+            mRecipeControlsClickListener = (OnRecipeControlsClickListener) context;
         } catch (ClassCastException ex) {
-            Log.e(TAG, "Context must implement OnRecipeStepsClickListener", ex);
+            Log.e(TAG, "Context must implement OnRecipeControlsClickListener", ex);
         }
     }
 
-    @OnClick(R.id.btn_see_steps)
-    public void seeSteps(View v) {
-        mRecipeStepsClickListener.seeRecipeSteps();
+    @OnClick(R.id.btn_start_cooking)
+    public void startCooking(View v) {
+        mRecipeControlsClickListener.startRecipeFromBeginning();
     }
 
+    @OnClick(R.id.btn_see_steps)
+    public void seeStepList(View v) {
+        mRecipeControlsClickListener.showStepList();
+    }
+    
     public void setRecipe(Recipe recipe) {
         this.mRecipe = recipe;
     }
 
-    public void setRecipeStepsClickListener(OnRecipeStepsClickListener recipeStepsClickListener) {
-        this.mRecipeStepsClickListener = recipeStepsClickListener;
+    public void setRecipeStepsClickListener(OnRecipeControlsClickListener recipeControlsClickListener) {
+        this.mRecipeControlsClickListener = recipeControlsClickListener;
     }
 
-    public interface OnRecipeStepsClickListener {
-        void seeRecipeSteps();
+    public interface OnRecipeControlsClickListener {
+        void startRecipeFromBeginning();
+        void showStepList();
     }
 }

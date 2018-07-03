@@ -20,7 +20,7 @@ import nanodegree.damian.bakingapp.helpers.test.SimpleIdlingResource;
 
 public class MainActivity extends AppCompatActivity implements
         RecipeListFragment.RecipeListFragmentOwnerCallbacks,
-        RecipeDetailsFragment.OnRecipeStepsClickListener {
+        RecipeDetailsFragment.OnRecipeControlsClickListener {
 
     public static final String EXTRA_RECIPE = RecipeActivity.EXTRA_RECIPE;
 
@@ -130,7 +130,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void seeRecipeSteps() {
+    public void startRecipeFromBeginning() {
         BakingUtils.launchFirstStepActivity(this, mRecipe);
+    }
+
+    @Override
+    public void showStepList() {
+        BakingUtils.launchStepListActivity(this, mRecipe);
     }
 }

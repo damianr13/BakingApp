@@ -37,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import nanodegree.damian.bakingapp.data.Recipe;
 import nanodegree.damian.bakingapp.data.RecipeStep;
+import nanodegree.damian.bakingapp.helpers.BakingUtils;
 
 import static com.google.android.exoplayer2.ExoPlayer.STATE_ENDED;
 
@@ -162,12 +163,7 @@ public class StepActivity extends AppCompatActivity implements ExoPlayer.EventLi
     }
 
     private void launchStep(int stepIndex) {
-        Intent stepIntent = new Intent(this, StepActivity.class);
-        stepIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        stepIntent.putExtra(EXTRA_RECIPE, Parcels.wrap(mRecipe));
-        stepIntent.putExtra(EXTRA_STEP_INDEX, stepIndex);
-
-        startActivity(stepIntent);
+        BakingUtils.launchStepActivity(this, mRecipe, stepIndex);
     }
 
     @Override
