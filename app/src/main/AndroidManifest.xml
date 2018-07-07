@@ -25,11 +25,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeActivity" />
+
+        <activity android:name=".RecipeActivity"
+            android:parentActivityName=".MainActivity"/>
+
         <activity
             android:name=".StepActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".StepListActivity" />
+            android:parentActivityName=".RecipeActivity"/>
+            <!--android:launchMode="singleTask"-->
+
+        <activity android:name=".StepListActivity"
+            android:parentActivityName=".RecipeActivity"/>
 
         <service
             android:name=".widget.IngredientsWidgetService"

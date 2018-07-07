@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/fl_step_holder"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="nanodegree.damian.bakingapp.StepActivity">
+
+        <LinearLayout
+            android:layout_gravity="top"
+            android:id="@+id/ll_cover_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                android:id="@+id/pl_step_media"
+                style="@style/CoverMedia"/>
+
+            <ImageView
+                android:id="@+id/iv_thumbnail_media"
+                style="@style/CoverMedia"
+                android:contentDescription="@string/thumbnail_recipe_step"/>
+
+            <ScrollView
+                android:layout_gravity="top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_step_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/BasicTextStyle"
+                    tools:text="This is where the long description will be"/>
+            </ScrollView>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            style="@style/TextAppearance.AppCompat.Display3"
+            tools:text="5"/>
+
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_steps_prev"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:text="@string/previous"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btn_steps_next"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/next"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+</FrameLayout>

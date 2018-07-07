@@ -47,4 +47,12 @@ public class BakingUtils {
 
         context.startActivity(stepIntent);
     }
+
+    public static boolean isFirstStep(int stepIndex, Recipe recipe) {
+        return stepIndex == 0;
+    }
+
+    public static boolean isLastStep(int stepIndex, Recipe recipe) {
+        return stepIndex == recipe.getStepList().size() - 1;
+    }
 }

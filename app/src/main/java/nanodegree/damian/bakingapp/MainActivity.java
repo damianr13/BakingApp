@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements
 
         setFlagOnIdlingResource(false);
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null || !mTwoPane) {
             return ;
         }
 
@@ -131,7 +131,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void startRecipeFromBeginning() {
-        BakingUtils.launchFirstStepActivity(this, mRecipe);
+        // if we have this action here it means it's a tablet, so we call the 2 pane version of the
+        // StepListActivity
+        showStepList();
     }
 
     @Override
