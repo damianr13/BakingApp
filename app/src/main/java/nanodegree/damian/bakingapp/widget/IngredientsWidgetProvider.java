@@ -5,11 +5,14 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
+import nanodegree.damian.bakingapp.IngredientsWidgetConfigure;
 import nanodegree.damian.bakingapp.MainActivity;
 import nanodegree.damian.bakingapp.R;
+import nanodegree.damian.bakingapp.data.database.AppDatabase;
 
 /**
  * Created by robert_damian on 06.06.2018.
@@ -17,7 +20,7 @@ import nanodegree.damian.bakingapp.R;
 
 public class IngredientsWidgetProvider extends AppWidgetProvider {
 
-    public static void updateIngredientsWidget(Context context, AppWidgetManager appWidgetManager,
+    public static void updateIngredientsWidget(final Context context, AppWidgetManager appWidgetManager,
                                                int appWidgetId) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
         Intent intent = new Intent(context, IngredientsWidgetService.class);
@@ -30,7 +33,13 @@ public class IngredientsWidgetProvider extends AppWidgetProvider {
                 launchAppIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setPendingIntentTemplate(R.id.lv_ingredients, launchAppPendingIntent);
 
-        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+        AsyncTask.execute(() -> {
+            int preferredRecipeId = IngredientsWidgetConfigure
+                    .loadPreferredRecipe(context, appWidgetId);
+            remoteViews.setTextViewText(R.id.tv_recipe_name, AppDatabase.getInstance(context)
+                    .recipeDao().loadRecipe(preferredRecipeId).getName());
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+        });
     }
 
     @Override

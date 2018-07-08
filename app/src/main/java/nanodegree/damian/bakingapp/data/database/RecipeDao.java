@@ -29,4 +29,7 @@ public interface RecipeDao {
 
     @Insert
     void insertAll(Recipe... recipes);
+
+    @Query("SELECT * FROM recipe WHERE id = :id")
+    Recipe loadRecipe(int id);
 }

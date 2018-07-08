@@ -1,6 +1,7 @@
 package nanodegree.damian.bakingapp.fragments;
 
 import android.content.Context;
+import android.content.CursorLoader;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;

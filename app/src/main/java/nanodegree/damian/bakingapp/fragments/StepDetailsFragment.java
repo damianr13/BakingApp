@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -45,6 +46,7 @@ import nanodegree.damian.bakingapp.R;
 import nanodegree.damian.bakingapp.RecipeActivity;
 import nanodegree.damian.bakingapp.data.Recipe;
 import nanodegree.damian.bakingapp.data.RecipeStep;
+import nanodegree.damian.bakingapp.helpers.PlayerStateInfo;
 
 import static com.google.android.exoplayer2.ExoPlayer.STATE_ENDED;
 
@@ -58,6 +60,7 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
 
     public static final String EXTRA_RECIPE = RecipeActivity.EXTRA_RECIPE;
     public static final String EXTRA_STEP_INDEX = "Extra step index";
+    public static final String EXTRA_PLAYER_STATE_INFO = "Extra player state info";
 
     @BindView(R.id.pl_step_media)
     SimpleExoPlayerView mPlayerView;
@@ -79,6 +82,8 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
 
     private IStepNavigator mStepNavigator;
 
+    private PlayerStateInfo mInitialPlayerStateInfo;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -97,6 +102,11 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
         mDescriptionTextView.setText(getStep().getDescription());
         setupButtons();
 
+        if (savedInstanceState != null && savedInstanceState.containsKey(EXTRA_PLAYER_STATE_INFO)) {
+            mInitialPlayerStateInfo = Parcels.unwrap(
+                    savedInstanceState.getParcelable(EXTRA_PLAYER_STATE_INFO));
+        }
+
         return rootView;
     }
 
@@ -111,9 +121,19 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (Util.SDK_INT > 23) {
+            loadMedia();
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        loadMedia();
+        if (Util.SDK_INT <= 23 || mExoPlayer == null) {
+            loadMedia();
+        }
     }
 
     public void setRecipe(Recipe recipe) {
@@ -126,6 +146,16 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
 
     public void setStepNavigator(IStepNavigator stepNavigator) {
         this.mStepNavigator = stepNavigator;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        PlayerStateInfo playerStateInfo = new PlayerStateInfo();
+        playerStateInfo.isPlaying = mExoPlayer.getPlayWhenReady();
+        playerStateInfo.currentPosition = mExoPlayer.getCurrentPosition();
+
+        outState.putParcelable(EXTRA_PLAYER_STATE_INFO, Parcels.wrap(playerStateInfo));
+        super.onSaveInstanceState(outState);
     }
 
     private void setupButtons() {
@@ -167,6 +197,11 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
                 new DefaultLoadControl());
         mExoPlayer.addListener(this);
         mPlayerView.setPlayer(mExoPlayer);
+
+        if (mInitialPlayerStateInfo != null) {
+            mExoPlayer.setPlayWhenReady(mInitialPlayerStateInfo.isPlaying);
+            mExoPlayer.seekTo(mInitialPlayerStateInfo.currentPosition);
+        }
     }
 
     private void setupVideoPlayer(String videoURL) {

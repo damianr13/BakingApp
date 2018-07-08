@@ -43,7 +43,7 @@ public class RecipeActivityScreenTests {
 
     @Test
     public void testSeeSteps() {
-        onView(withId(R.id.btn_see_steps)).perform(click());
+        onView(withId(R.id.btn_start_cooking)).perform(click());
 
         onView(withId(R.id.btn_steps_next)).check(matches(isDisplayed()));
     }
